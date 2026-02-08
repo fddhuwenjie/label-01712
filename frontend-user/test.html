@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>工作流编辑器 - 单元测试</title>
+    <style>
+        body {
+            font-family: 'Monaco', 'Menlo', monospace;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        h1 { color: #6366f1; margin-bottom: 30px; }
+        .test-container { max-width: 800px; margin: 0 auto; }
+        .summary {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .passed { color: #10b981; }
+        .failed { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 单元测试</h1>
+        <p>打开浏览器控制台查看测试结果</p>
+        <div class="summary" id="summary"></div>
+    </div>
+
+    <script type="module">
+        import './js/__tests__/WorkflowExecutor.test.js';
+        import './js/__tests__/StorageManager.test.js';
+        import { getResults, printSummary } from './js/__tests__/testFramework.js';
+
+        setTimeout(() => {
+            const success = printSummary();
+            const results = getResults();
+            document.getElementById('summary').innerHTML = `
+                <p class="passed">✅ 通过: ${results.passed}</p>
+                <p class="failed">❌ 失败: ${results.failed}</p>
+                <p>📊 总计: ${results.passed + results.failed}</p>
+            `;
+        }, 100);
+    </script>
+</body>
+</html>
