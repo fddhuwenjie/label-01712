@@ -9,7 +9,7 @@
 docker-compose up --build -d
 
 # 访问应用
-open http://localhost:8083
+open http://localhost:8085
 
 # 停止服务
 docker-compose down
@@ -21,13 +21,13 @@ docker-compose down
 
 | 服务 | 端口 | 说明 |
 |-----|------|-----|
-| frontend-user | 8083 | 工作流编辑器前端 |
+| frontend-user | 8085 | 工作流编辑器前端 |
 
 ## 测试账号
 
 本项目为纯前端应用，无需登录。数据存储在浏览器 LocalStorage。
 
-运行单元测试：访问 `http://localhost:8083/test.html`
+运行单元测试：访问 `http://localhost:8085/test.html`
 
 ## 题目内容
 
