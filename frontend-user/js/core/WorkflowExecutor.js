@@ -20,7 +20,7 @@ export class WorkflowExecutor {
         // 拓扑排序
         const sorted = this.topologicalSort(nodes, connections);
         
-        if (sorted.length === 0 && nodes.size > 0) {
+        if (sorted.length !== nodes.size) {
             throw new Error('工作流存在循环依赖');
         }
 
@@ -96,7 +96,7 @@ export class WorkflowExecutor {
             case '>': return numInput > compare;
             case '<': return numInput < compare;
             case '==': return numInput == compare;
-            case '>=': return numInput > compare;
+            case '>=': return numInput >= compare;
             case '<=': return numInput <= compare;
             default: return false;
         }
