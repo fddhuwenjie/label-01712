@@ -110,8 +110,8 @@ export class ConnectionManager {
             visited.add(current);
 
             this.connections
-                .filter(c => c.to === current)
-                .forEach(c => stack.push(c.from));
+                .filter(c => c.from === current)
+                .forEach(c => stack.push(c.to));
         }
 
         return visited.has(toId);

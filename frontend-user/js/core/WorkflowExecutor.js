@@ -96,7 +96,7 @@ export class WorkflowExecutor {
             case '>': return numInput > compare;
             case '<': return numInput < compare;
             case '==': return numInput == compare;
-            case '>=': return numInput >= compare;
+            case '>=': return numInput > compare;
             case '<=': return numInput <= compare;
             default: return false;
         }
