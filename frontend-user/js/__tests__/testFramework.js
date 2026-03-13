@@ -27,32 +27,37 @@ export function it(name, fn) {
     }
 }
 
-export function expect(actual) {
-    return {
+function createExpect(actual, isNot = false) {
+    const matchers = {
         toBe(expected) {
-            if (actual !== expected) {
+            const pass = actual === expected;
+            if (isNot ? pass : !pass) {
                 throw new Error(`Expected ${expected} but got ${actual}`);
             }
         },
         toEqual(expected) {
             const actualStr = JSON.stringify(actual);
             const expectedStr = JSON.stringify(expected);
-            if (actualStr !== expectedStr) {
+            const pass = actualStr === expectedStr;
+            if (isNot ? pass : !pass) {
                 throw new Error(`Expected ${expectedStr} but got ${actualStr}`);
             }
         },
         toContain(item) {
-            if (!actual.includes(item)) {
+            const pass = actual.includes(item);
+            if (isNot ? pass : !pass) {
                 throw new Error(`Expected array to contain ${item}`);
             }
         },
         toBeTruthy() {
-            if (!actual) {
+            const pass = !!actual;
+            if (isNot ? pass : !pass) {
                 throw new Error(`Expected truthy value but got ${actual}`);
             }
         },
         toBeFalsy() {
-            if (actual) {
+            const pass = !actual;
+            if (isNot ? pass : !pass) {
                 throw new Error(`Expected falsy value but got ${actual}`);
             }
         },
@@ -63,11 +68,21 @@ export function expect(actual) {
             } catch (e) {
                 threw = true;
             }
-            if (!threw) {
+            if (isNot ? threw : !threw) {
                 throw new Error('Expected function to throw');
             }
         }
     };
+
+    Object.defineProperty(matchers, 'not', {
+        get: () => createExpect(actual, !isNot)
+    });
+
+    return matchers;
+}
+
+export function expect(actual) {
+    return createExpect(actual);
 }
 
 export function beforeEach(fn) {
